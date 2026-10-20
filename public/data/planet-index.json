@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Mercury",
+    "order": 1,
+    "type": "Terrestrial planet",
+    "distanceKm": 57900000
+  },
+  {
+    "name": "Venus",
+    "order": 2,
+    "type": "Terrestrial planet",
+    "distanceKm": 108200000
+  },
+  {
+    "name": "Earth",
+    "order": 3,
+    "type": "Terrestrial planet",
+    "distanceKm": 149600000
+  },
+  {
+    "name": "Mars",
+    "order": 4,
+    "type": "Terrestrial planet",
+    "distanceKm": 227900000
+  },
+  {
+    "name": "Jupiter",
+    "order": 5,
+    "type": "Gas giant",
+    "distanceKm": 778600000
+  },
+  {
+    "name": "Saturn",
+    "order": 6,
+    "type": "Gas giant",
+    "distanceKm": 1430000000
+  },
+  {
+    "name": "Uranus",
+    "order": 7,
+    "type": "Ice giant",
+    "distanceKm": 2870000000
+  },
+  {
+    "name": "Neptune",
+    "order": 8,
+    "type": "Ice giant",
+    "distanceKm": 4500000000
+  }
+]

@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080d20">
+  <meta name="description" content="Bhoomandal — explore planets, stars, the solar system, and astronomy updates.">
+  <title>Bhoomandal — Your Universe, Explained</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"
+      }
+    }
+  </script>
+  <script src="/app.js" defer></script>
+  <script type="module" src="/solar-system.js"></script>
+</head>
+<body>
+  <div class="space-noise" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="Bhoomandal home">
+      <span class="brand-mark">✦</span><span>BHOOMANDAL</span>
+    </a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="#planets">Planets</a>
+      <a href="#stars">Stars</a>
+      <a href="#monitor">Live Monitor</a>
+      <a href="#discover">Discover</a>
+    </nav>
+    <a class="top-cta" href="#discover">Explore the cosmos <span>↗</span></a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+  </header>
+
+  <main>
+    <section class="hero section-shell" id="home">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="pulse"></span> YOUR PERSONAL SPACE EXPLORER</div>
+        <h1>The universe is<br><span>closer than you think.</span></h1>
+        <p class="hero-text">Travel through worlds, discover the lives of stars, and explore what is happening in space — all from one place.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#planets">Explore planets <span>→</span></a>
+          <a class="button button-ghost" href="#monitor"><span class="play-icon">▶</span> View solar system</a>
+        </div>
+        <div class="hero-facts">
+          <div><strong>8</strong><span>Planets</span></div>
+          <div><strong>13.8B</strong><span>Years of cosmic history</span></div>
+          <div><strong>∞</strong><span>Things to discover</span></div>
+        </div>
+      </div>
+      <div class="hero-art" aria-label="Illustration of planets orbiting a star">
+        <div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div><div class="hero-orbit orbit-three"></div>
+        <div class="sun-glow"></div><div class="hero-sun"></div>
+        <div class="hero-planet hero-mercury"></div><div class="hero-planet hero-venus"></div>
+        <div class="hero-planet hero-earth"><span></span></div><div class="hero-planet hero-mars"></div>
+        <div class="hero-planet hero-jupiter"></div><div class="hero-planet hero-saturn"><span></span></div>
+        <div class="hero-planet hero-neptune"></div>
+        <div class="float-card"><span class="live-dot"></span><div><strong>Cosmic curiosity</strong><small>Start your journey today</small></div></div>
+        <span class="star star-a">✦</span><span class="star star-b">✧</span><span class="star star-c">✦</span><span class="star star-d">·</span>
+      </div>
+    </section>
+
+    <section class="ticker" aria-label="App highlights">
+      <span>✦ PLANETARY SCIENCE</span><span>✦ STELLAR EVOLUTION</span><span>✦ LIVE SKY DATA</span><span>✦ COSMIC HISTORY</span><span>✦ PLANETARY SCIENCE</span>
+    </section>
+
+    <section class="section-shell section-block" id="planets">
+      <div class="section-heading">
+        <div><div class="eyebrow">01 / THE SOLAR SYSTEM</div><h2>Meet our <span>planetary neighbours.</span></h2></div>
+        <p>Every world has a story. Select a planet to explore its atmosphere, composition, history, and most fascinating facts.</p>
+      </div>
+      <div class="planet-grid" id="planetGrid" aria-live="polite"></div>
+      <div class="planet-detail" id="planetDetail" hidden></div>
+      <p class="fine-print">Planet facts are educational summaries. Distances and sizes are rounded; the artwork is not to scale.</p>
+    </section>
+
+    <section class="dark-panel section-block" id="monitor">
+      <div class="section-shell">
+        <div class="section-heading">
+          <div><div class="eyebrow">02 / SOLAR SYSTEM MONITOR</div><h2>Our cosmic <span>neighbourhood.</span></h2></div>
+          <p>Watch an illustrative orbital map update with the current date and time. Planet positions are simplified estimates, not spacecraft telemetry.</p>
+        </div>
+        <div class="monitor-layout monitor-layout-3d">
+          <div class="orbit-panel orbit-panel-3d">
+            <div class="orbit-panel-top"><span class="live-badge"><i></i> INTERACTIVE 3D MODEL</span><span id="monitorTime">Starting 3D scene…</span></div>
+            <div class="solar-stage">
+              <div id="solarScene" role="img" aria-label="Interactive 3D solar system. Drag to rotate, scroll to zoom, and select a planet for details.">
+                <div class="scene-loading" id="sceneLoading"><span class="loading-orb"></span><strong>Preparing your universe…</strong><small>Loading the 3D engine</small></div>
+              </div>
+              <div class="scene-overlay scene-overlay-top">
+                <span class="scene-chip"><i class="live-dot"></i> 3D EXPLORER</span>
+                <span class="scene-chip" id="sceneStatus">Loading scene</span>
+              </div>
+              <div class="scene-controls" aria-label="3D solar system controls">
+                <button type="button" id="playPauseBtn" class="scene-control-btn" aria-pressed="false">Ⅱ Pause</button>
+                <button type="button" id="resetViewBtn" class="scene-control-btn">↺ Reset view</button>
+                <label class="scene-select-label" for="focusPlanet">Focus</label>
+                <select id="focusPlanet" aria-label="Focus a planet">
+                  <option value="Sun">Sun</option><option value="Mercury">Mercury</option><option value="Venus">Venus</option><option value="Earth">Earth</option><option value="Mars">Mars</option><option value="Jupiter">Jupiter</option><option value="Saturn">Saturn</option><option value="Uranus">Uranus</option><option value="Neptune">Neptune</option>
+                </select>
+                <label class="scene-speed-label" for="orbitSpeed">Speed <span id="speedValue">1×</span></label>
+                <input id="orbitSpeed" type="range" min="0" max="4" value="1" step="0.25" aria-label="Orbit animation speed">
+                <label class="scene-check"><input type="checkbox" id="toggleOrbits" checked> Orbits</label>
+                <label class="scene-check"><input type="checkbox" id="toggleLabels" checked> Labels</label>
+              </div>
+            </div>
+            <div class="map-legend"><span><i class="legend-sun"></i> Sun</span><span><i class="legend-planet"></i> Planet</span><span><i class="legend-orbit"></i> Orbit path</span><span class="legend-hint">Drag to rotate · Scroll to zoom · Click a world</span></div>
+          </div>
+          <aside class="monitor-side">
+            <div class="info-card selected-body-card" aria-live="polite">
+              <div class="card-kicker">SELECTED OBJECT</div><div class="selected-object-heading"><span id="selectedObjectGlyph">☼</span><div><h3 id="selectedObjectName">The Sun</h3><small id="selectedObjectType">G-type main-sequence star</small></div></div>
+              <p id="selectedObjectDescription">The star at the center of our solar system. Its gravity holds the planets in orbit, and nuclear fusion in its core powers the sunlight reaching Earth.</p>
+              <div class="stat-row"><span>Mean distance from Sun</span><strong id="selectedObjectDistance">—</strong></div>
+              <div class="stat-row"><span>Diameter</span><strong id="selectedObjectDiameter">—</strong></div>
+              <div class="stat-row"><span>Orbital period</span><strong id="selectedObjectYear">—</strong></div>
+              <div class="stat-row"><span>Known moons</span><strong id="selectedObjectMoons">—</strong></div>
+              <button type="button" id="morePlanetInfo" class="detail-link-btn">Open full planet profile ↗</button>
+            </div>
+            <div class="info-card">
+              <div class="card-kicker">SPACE, AT A GLANCE</div><h3>Our cosmic neighbourhood</h3>
+              <div class="stat-row"><span>Sunlight to Earth</span><strong>~8 min 20 sec</strong></div>
+              <div class="stat-row"><span>Solar system age</span><strong>~4.6 billion years</strong></div>
+              <div class="stat-row"><span>Scene updated</span><strong id="lastUpdated">—</strong></div>
+              <p class="scene-disclaimer">Planet sizes and distances are intentionally compressed so every world is visible. Orbital motion is illustrative, not a precision ephemeris or live spacecraft telemetry.</p>
+              <a href="https://ssd.jpl.nasa.gov/horizons/" target="_blank" rel="noreferrer">For precise positions: JPL Horizons ↗</a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-shell section-block" id="stars">
+      <div class="section-heading">
+        <div><div class="eyebrow">03 / THE LIVES OF STARS</div><h2>Born in darkness.<br><span>Made of stardust.</span></h2></div>
+        <p>Stars are not eternal. Their mass determines how they shine, how long they live, and what remains when they die.</p>
+      </div>
+      <div class="star-life-intro">
+        <div class="star-life-art"><div class="nebula nebula-one"></div><div class="nebula nebula-two"></div><div class="protostar"></div><div class="life-star life-star-one"></div><div class="life-star life-star-two"></div><div class="life-star life-star-three"></div></div>
+        <div class="star-life-copy"><div class="card-kicker">A COSMIC LIFE STORY</div><h3>From a cloud of gas to a stellar remnant.</h3><p>Gravity gathers gas and dust into a dense core. When the core becomes hot enough, nuclear fusion begins. A star then spends most of its life balancing gravity with pressure from its hot interior.</p><p>Its ending depends mostly on how much mass it was born with.</p></div>
+      </div>
+      <div class="life-timeline">
+        <article class="life-step"><span class="step-number">01</span><div class="step-visual cloud-visual">☁</div><h3>Nebula</h3><p>A vast cloud of gas and dust begins to collapse under gravity.</p><small>STAR BIRTHPLACE</small></article>
+        <article class="life-step"><span class="step-number">02</span><div class="step-visual proto-visual">◉</div><h3>Protostar</h3><p>The collapsing core heats up while material continues to fall inward.</p><small>GROWING CORE</small></article>
+        <article class="life-step"><span class="step-number">03</span><div class="step-visual main-visual">☼</div><h3>Main sequence</h3><p>Hydrogen fusion powers the star for most of its life.</p><small>STABLE FUSION</small></article>
+        <article class="life-step"><span class="step-number">04</span><div class="step-visual giant-visual">✹</div><h3>Giant / supergiant</h3><p>After core hydrogen runs low, the star changes and expands.</p><small>FINAL ACTS BEGIN</small></article>
+        <article class="life-step"><span class="step-number">05</span><div class="step-visual end-visual">✧</div><h3>The ending</h3><p>Lower-mass stars leave white dwarfs; massive stars may explode and leave neutron stars or black holes.</p><small>STELLAR REMNANT</small></article>
+      </div>
+      <div class="mass-outcomes">
+        <div class="outcome-card"><span class="outcome-symbol white-dwarf">◉</span><div><h3>Lower- and medium-mass stars</h3><p>They shed their outer layers, often creating a planetary nebula, and leave a hot, dense <strong>white dwarf</strong> that slowly cools.</p></div></div>
+        <div class="outcome-card"><span class="outcome-symbol supernova">✹</span><div><h3>Massive stars</h3><p>They can undergo a <strong>core-collapse supernova</strong>. The core may become a neutron star or, if massive enough, a black hole.</p></div></div>
+      </div>
+      <p class="fine-print">Stellar evolution varies with mass, composition, and interactions with companion stars. A supernova is not the fate of every star.</p>
+    </section>
+
+    <section class="discover-section section-block" id="discover">
+      <div class="section-shell">
+        <div class="section-heading">
+          <div><div class="eyebrow">04 / THE UNIVERSE, UPDATED</div><h2>Fresh from <span>space science.</span></h2></div>
+          <p>Live data panels connect to public NASA services. If a service is temporarily unavailable, the rest of Bhoomandal remains usable.</p>
+        </div>
+        <div class="discover-grid">
+          <article class="apod-card">
+            <div class="data-card-head"><div><div class="card-kicker">NASA / DAILY FEATURE</div><h3>Astronomy picture of the day</h3></div><span class="data-icon">✦</span></div>
+            <div id="apodContent" class="apod-content"><div class="loading-skeleton"></div><p>Loading NASA's astronomy feature…</p></div>
+            <a class="text-link" id="apodLink" href="https://science.nasa.gov/solar-system/" target="_blank" rel="noreferrer">Explore NASA science ↗</a>
+          </article>
+          <article class="neo-card">
+            <div class="data-card-head"><div><div class="card-kicker">NASA / NEAR-EARTH OBJECTS</div><h3>Asteroids passing near Earth</h3></div><span class="data-icon">◌</span></div>
+            <p class="card-description">A daily snapshot of tracked near-Earth objects and their estimated close-approach data. “Potentially hazardous” is a technical classification, not a prediction of impact.</p>
+            <div id="neoContent"><div class="loading-skeleton short"></div><p>Loading today's object feed…</p></div>
+            <a class="text-link" href="https://cneos.jpl.nasa.gov/" target="_blank" rel="noreferrer">NASA/JPL CNEOS ↗</a>
+          </article>
+        </div>
+        <article class="gallery-card">
+          <div class="gallery-head"><div><div class="card-kicker">NASA IMAGE LIBRARY</div><h3>Search the cosmos</h3><p>Explore public NASA imagery of planets, galaxies, nebulae, and missions.</p></div>
+            <form id="searchForm" class="search-form"><label class="sr-only" for="spaceSearch">Search NASA images</label><input id="spaceSearch" type="search" value="nebula" placeholder="Try Mars, Jupiter, nebula…"><button class="button button-primary" type="submit">Search ↗</button></form>
+          </div>
+          <div id="galleryResults" class="gallery-grid"><p class="muted">Loading NASA image results…</p></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-shell sources-section">
+      <div><div class="eyebrow">BUILT FOR CURIOSITY</div><h2>Wonder, backed by <span>science.</span></h2><p>Bhoomandal combines educational summaries with live links to trusted astronomy data providers.</p></div>
+      <div class="source-links"><a href="https://science.nasa.gov/" target="_blank" rel="noreferrer">NASA Science ↗</a><a href="https://ssd.jpl.nasa.gov/horizons/" target="_blank" rel="noreferrer">JPL Horizons ↗</a><a href="https://images.nasa.gov/" target="_blank" rel="noreferrer">NASA Image Library ↗</a></div>
+    </section>
+  </main>
+
+  <footer class="footer"><a class="brand" href="#home"><span class="brand-mark">✦</span><span>BHOOMANDAL</span></a><p>Keep looking up. <span>Made for curious minds.</span></p><a href="#home">Back to top ↑</a></footer>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
